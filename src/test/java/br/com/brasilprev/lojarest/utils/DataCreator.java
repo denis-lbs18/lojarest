@@ -13,7 +13,6 @@ import br.com.brasilprev.lojarest.models.Address;
 import br.com.brasilprev.lojarest.models.Cart;
 import br.com.brasilprev.lojarest.models.Client;
 import br.com.brasilprev.lojarest.models.Product;
-import br.com.brasilprev.lojarest.models.User;
 
 public final class DataCreator {
 	private DataCreator() {
@@ -72,10 +71,6 @@ public final class DataCreator {
 		Cart cart = new Cart(productList, client, address);
 		cart.setId(createRandomId());
 		return cart;
-	}
-
-	public static User createUser(String userName, String password) {
-		return new User(userName, password);
 	}
 
 	public static Product createProduct(String productName, double minValue, double maxValue, int maxQuantity) {
