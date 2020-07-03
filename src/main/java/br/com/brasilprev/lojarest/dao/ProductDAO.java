@@ -1,5 +1,7 @@
 package br.com.brasilprev.lojarest.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -25,5 +27,13 @@ public class ProductDAO extends AbstractDAO<Product> {
 		query.setParameter("pId", id);
 
 		return query.getSingleResult();
+	}
+
+	@Override
+	public List<Product> listAll() {
+		EntityManager em = new JPAUtil().getEntityManager();
+		TypedQuery<Product> query = em.createQuery("select p from Product p", Product.class);
+
+		return query.getResultList();
 	}
 }

@@ -3,8 +3,6 @@ package br.com.brasilprev.lojarest.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.brasilprev.lojarest.models.AbstractEntity;
 import br.com.brasilprev.lojarest.util.JPAUtil;
@@ -16,15 +14,13 @@ import br.com.brasilprev.lojarest.util.JPAUtil;
  *
  * @param <T> Class extends AbstractEntity
  */
-public class AbstractDAO<T extends AbstractEntity> {
-	private Class<T> persistedClass;
+public abstract class AbstractDAO<T extends AbstractEntity> {
 
 	protected AbstractDAO() {
 	}
 
 	protected AbstractDAO(Class<T> persistedClass) {
 		this();
-		this.persistedClass = persistedClass;
 	}
 
 	/**
@@ -32,13 +28,7 @@ public class AbstractDAO<T extends AbstractEntity> {
 	 * 
 	 * @return {@link List} list of all <T> objects.
 	 */
-	public List<T> listAll() {
-		EntityManager em = new JPAUtil().getEntityManager();
-		CriteriaBuilder builder = em.getCriteriaBuilder();
-		CriteriaQuery<T> query = builder.createQuery(persistedClass);
-		query.from(persistedClass);
-		return em.createQuery(query).getResultList();
-	}
+	public abstract List<T> listAll();
 
 	/**
 	 * Save an item to database.

@@ -1,5 +1,7 @@
 package br.com.brasilprev.lojarest.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -25,5 +27,13 @@ public class CartDAO extends AbstractDAO<Cart> {
 		query.setParameter("pId", id);
 
 		return query.getSingleResult();
+	}
+
+	@Override
+	public List<Cart> listAll() {
+		EntityManager em = new JPAUtil().getEntityManager();
+		TypedQuery<Cart> query = em.createQuery("select c from Cart c", Cart.class);
+
+		return query.getResultList();
 	}
 }
