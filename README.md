@@ -24,6 +24,20 @@ Open your gitbash and prompt this command:
 
 ## Project Start-up config.
 
+Open your mysql server client, and create a database named 'brasilprev_rest'.
+
+Also you can open your console, type: 
+
+```sh
+	mysql -u YOUR_USERNAME -p 
+```
+
+And then insert your mysql password. After that, you can insert this command:
+
+```sh
+	create database brasilprev_rest;
+```
+
 Select PopulateDataBase.java inside br.com.brasilprev.lojarest.util and run it as a Java Application:
 
 
