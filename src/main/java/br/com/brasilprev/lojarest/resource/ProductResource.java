@@ -17,16 +17,30 @@ import javax.ws.rs.core.Response;
 import br.com.brasilprev.lojarest.dao.ProductDAO;
 import br.com.brasilprev.lojarest.models.Product;
 
-@Path("/product")
+/**
+ * Represents all endpoint resources under /products.
+ * 
+ * @author denis
+ *
+ */
+@Path("/products")
 public class ProductResource extends Application {
 
 	private ProductDAO productDAO;
 
+	/**
+	 * Post construct method.
+	 */
 	@PostConstruct
 	private void init() {
 		this.productDAO = new ProductDAO();
 	}
 
+	/**
+	 * Lists all products in application.
+	 * 
+	 * @return {@link List} of all products.
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/listAll")
@@ -35,14 +49,26 @@ public class ProductResource extends Application {
 		return allProducts;
 	}
 
+	/**
+	 * List a single product.
+	 * 
+	 * @param id id from a product.
+	 * @return {@link Product} object type.
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/list/{id}")
+	@Path("{id}")
 	public Product listProduct(@PathParam("id") int id) {
 		Product product = productDAO.findProductById(Integer.valueOf(id).longValue());
 		return product;
 	}
 
+	/**
+	 * Add a product into the system.
+	 * 
+	 * @param product product to be added.
+	 * @return {@link Response} with status.
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/add")
@@ -51,6 +77,12 @@ public class ProductResource extends Application {
 		return Response.ok().build();
 	}
 
+	/**
+	 * Remove a product from the system.
+	 * 
+	 * @param id id from the product.
+	 * @return {@link Response} with status.
+	 */
 	@DELETE
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("{id}")

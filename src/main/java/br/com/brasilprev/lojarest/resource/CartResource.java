@@ -19,25 +19,45 @@ import br.com.brasilprev.lojarest.dao.ProductDAO;
 import br.com.brasilprev.lojarest.models.Cart;
 import br.com.brasilprev.lojarest.models.Product;
 
-@Path("/cart")
+/**
+ * Represents all endpoint resources under /carts.
+ * 
+ * @author denis
+ *
+ */
+@Path("/carts")
 public class CartResource {
 	private CartDAO cartDAO;
 	private ProductDAO productDAO;
 
+	/**
+	 * Post construct method.
+	 */
 	@PostConstruct
 	private void init() {
 		this.cartDAO = new CartDAO();
 		this.productDAO = new ProductDAO();
 	}
 
+	/**
+	 * Lists all created carts in application.
+	 * 
+	 * @return {@link List} of all carts.
+	 */
 	@GET
 	@Path("/listAll")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Cart> listAll(@PathParam("id") long id) {
+	public List<Cart> listAll() {
 		List<Cart> allCarts = cartDAO.listAll();
 		return allCarts;
 	}
 
+	/**
+	 * List a single cart.
+	 * 
+	 * @param id id from a cart.
+	 * @return {@link Cart} object type.
+	 */
 	@Path("{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +66,13 @@ public class CartResource {
 		return cart;
 	}
 
+	/**
+	 * Insert a product in a cart
+	 * 
+	 * @param id        id from the cart.
+	 * @param productId id from the product to be added.
+	 * @return {@link Response} with status.
+	 */
 	@POST
 	@Path("{id}/products/{productId}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -57,6 +84,13 @@ public class CartResource {
 		return Response.ok().build();
 	}
 
+	/**
+	 * Remove a product from a cart.
+	 * 
+	 * @param id        id from the cart.
+	 * @param productId id from the product to be removed.
+	 * @return {@link Response} with status.
+	 */
 	@Path("{id}/products/{productId}")
 	@DELETE
 	public Response removeProduct(@PathParam("id") long id, @PathParam("productId") long productId) {
@@ -66,6 +100,13 @@ public class CartResource {
 		return Response.ok().build();
 	}
 
+	/**
+	 * Get a single product from a cart
+	 * 
+	 * @param id        id from the cart.
+	 * @param productId id from the product to be removed.
+	 * @return {@link Product} found.
+	 */
 	@GET
 	@Path("{id}/products/{productId}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -76,6 +117,13 @@ public class CartResource {
 		return product;
 	}
 
+	/**
+	 * Change a product quantity
+	 * 
+	 * @param id        id from the cart.
+	 * @param productId id from the product to be removed.
+	 * @return {@link Response} with status.
+	 */
 	@Path("{id}/products/{productId}/quantity")
 	@PUT
 	public Response changeProductQuantity(@PathParam("id") long id, @PathParam("productId") long productId) {

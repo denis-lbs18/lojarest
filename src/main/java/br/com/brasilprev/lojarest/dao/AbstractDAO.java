@@ -9,6 +9,13 @@ import javax.persistence.criteria.CriteriaQuery;
 import br.com.brasilprev.lojarest.models.AbstractEntity;
 import br.com.brasilprev.lojarest.util.JPAUtil;
 
+/**
+ * Abstract DAO, reffered on all other DAOs.
+ * 
+ * @author denis
+ *
+ * @param <T> Class extends AbstractEntity
+ */
 public class AbstractDAO<T extends AbstractEntity> {
 	private Class<T> persistedClass;
 
@@ -20,6 +27,11 @@ public class AbstractDAO<T extends AbstractEntity> {
 		this.persistedClass = persistedClass;
 	}
 
+	/**
+	 * List all objects from a <T> class.
+	 * 
+	 * @return {@link List} list of all <T> objects.
+	 */
 	public List<T> listAll() {
 		EntityManager em = new JPAUtil().getEntityManager();
 		CriteriaBuilder builder = em.getCriteriaBuilder();
@@ -28,6 +40,13 @@ public class AbstractDAO<T extends AbstractEntity> {
 		return em.createQuery(query).getResultList();
 	}
 
+	/**
+	 * Save an item to database.
+	 * 
+	 * If it has no id, persist. Else, merge.
+	 * 
+	 * @param entity <T> object.
+	 */
 	public void saveItem(T entity) {
 		EntityManager em = new JPAUtil().getEntityManager();
 
@@ -43,6 +62,11 @@ public class AbstractDAO<T extends AbstractEntity> {
 		em.close();
 	}
 
+	/**
+	 * Delete an item from database.
+	 * 
+	 * @param entity <T> object.
+	 */
 	public void removeItem(T entity) {
 		EntityManager em = new JPAUtil().getEntityManager();
 

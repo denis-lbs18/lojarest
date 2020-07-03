@@ -14,7 +14,6 @@ import br.com.brasilprev.lojarest.models.Address;
 import br.com.brasilprev.lojarest.models.Cart;
 import br.com.brasilprev.lojarest.models.Client;
 import br.com.brasilprev.lojarest.models.Product;
-import br.com.brasilprev.lojarest.models.User;
 
 public class PopulateDataBase {
 	public static void main(String[] args) {
@@ -49,9 +48,6 @@ public class PopulateDataBase {
 
 		Product keyboard = createProduct("Keyboard", 20, 40, 2000);
 		em.persist(keyboard);
-
-		User user = createUser("root", "123");
-		em.persist(user);
 
 		Cart cartInfo = new Cart();
 		cartInfo.add(keyboard);
@@ -97,10 +93,6 @@ public class PopulateDataBase {
 		List<Address> listAddress = Arrays.asList(address1, address2, address3, address4);
 
 		return listAddress.get(createRandomInt(listAddress.size()));
-	}
-
-	private static User createUser(String userName, String password) {
-		return new User(userName, password);
 	}
 
 	private static Product createProduct(String productName, int minValue, double maxValue, int maxQuantity) {

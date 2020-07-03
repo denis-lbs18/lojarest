@@ -17,23 +17,43 @@ import br.com.brasilprev.lojarest.dao.ClientDAO;
 import br.com.brasilprev.lojarest.models.Address;
 import br.com.brasilprev.lojarest.models.Client;
 
+/**
+ * Represents all endpoint resources under /clients.
+ * 
+ * @author denis
+ *
+ */
 @Path("/clients")
 public class ClientResource {
 	private ClientDAO clientDAO;
 
+	/**
+	 * Post construct method.
+	 */
 	@PostConstruct
 	private void init() {
 		this.clientDAO = new ClientDAO();
 	}
 
+	/**
+	 * Lists all clients in application.
+	 * 
+	 * @return {@link List} of all clients.
+	 */
 	@GET
 	@Path("/listAll")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Client> listAll(@PathParam("id") long id) {
+	public List<Client> listAll() {
 		List<Client> allCarts = clientDAO.listAll();
 		return allCarts;
 	}
 
+	/**
+	 * List a single client.
+	 * 
+	 * @param id id from a client.
+	 * @return {@link Client} object type.
+	 */
 	@Path("{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -42,6 +62,12 @@ public class ClientResource {
 		return client;
 	}
 
+	/**
+	 * Show a client's address
+	 * 
+	 * @param id id from a client.
+	 * @return {@link Address} client's address.
+	 */
 	@GET
 	@Path("{id}/address")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -50,6 +76,12 @@ public class ClientResource {
 		return client.getAddress();
 	}
 
+	/**
+	 * Add a client into the system.
+	 * 
+	 * @param client client to be added.
+	 * @return {@link Response} with status.
+	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/add")
@@ -58,6 +90,12 @@ public class ClientResource {
 		return Response.ok().build();
 	}
 
+	/**
+	 * Remove a client from the system.
+	 * 
+	 * @param id id from the client.
+	 * @return {@link Response} with status.
+	 */
 	@Path("{id}")
 	@DELETE
 	public Response removeClient(@PathParam("id") long id) {
