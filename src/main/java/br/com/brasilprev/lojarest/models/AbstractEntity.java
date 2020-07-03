@@ -47,4 +47,8 @@ public abstract class AbstractEntity implements Serializable {
 		return true;
 	}
 
+	public boolean canEqual(Object obj) {
+		return obj instanceof AbstractEntity;
+	}
+
 }

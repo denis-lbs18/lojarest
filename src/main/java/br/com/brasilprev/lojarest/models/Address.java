@@ -3,6 +3,8 @@ package br.com.brasilprev.lojarest.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 @Entity
 public class Address extends AbstractEntity {
 	private static final long serialVersionUID = 2483258580348038490L;
@@ -67,4 +69,32 @@ public class Address extends AbstractEntity {
 		this.zipCode = zipCode;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((number == null) ? 0 : number.hashCode());
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
+		result = prime * result + ((street == null) ? 0 : street.hashCode());
+		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Address) {
+			Address other = (Address) obj;
+			return other.canEqual(this) && new EqualsBuilder().appendSuper(super.equals(other))
+					.append(other.getStreet(), this.getStreet()).append(other.getState(), this.getState())
+					.append(other.getNumber(), this.getNumber()).append(other.getCity(), this.getCity())
+					.append(other.getState(), this.getState()).append(other.getZipCode(), this.getZipCode()).isEquals();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canEqual(Object obj) {
+		return obj instanceof Address;
+	}
 }

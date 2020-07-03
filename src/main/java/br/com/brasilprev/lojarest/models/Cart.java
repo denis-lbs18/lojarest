@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 @Entity
 public class Cart extends AbstractEntity {
 	private static final long serialVersionUID = 8471550000153580309L;
@@ -20,6 +22,15 @@ public class Cart extends AbstractEntity {
 	private Client client;
 	@ManyToOne(cascade = { CascadeType.ALL })
 	private Address address;
+
+	public Cart() {
+	}
+
+	public Cart(List<Product> productList, Client client, Address address) {
+		this.productList = productList;
+		this.client = client;
+		this.address = address;
+	}
 
 	public List<Product> getProductList() {
 		return productList;
@@ -77,5 +88,31 @@ public class Cart extends AbstractEntity {
 				return;
 			}
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
+		result = prime * result + ((productList == null) ? 0 : productList.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Cart) {
+			Cart other = (Cart) obj;
+			return other.canEqual(this) && new EqualsBuilder().appendSuper(super.equals(other))
+					.append(other.getProductList(), this.getProductList()).append(other.getClient(), this.getClient())
+					.append(other.getAddress(), this.getAddress()).isEquals();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canEqual(Object obj) {
+		return obj instanceof Cart;
 	}
 }
