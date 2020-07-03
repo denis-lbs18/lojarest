@@ -7,7 +7,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.brasilprev.lojarest.models.Product;
 
-public class ProductDAO {
+public class ProductDAO extends AbstractDAO<Product> {
 	public List<Product> listAllProducts() {
 		EntityManager em = new JPAUtil().getEntityManager();
 		TypedQuery<Product> query = em.createQuery("select p from Product p", Product.class);
@@ -21,15 +21,5 @@ public class ProductDAO {
 		query.setParameter("pId", id);
 
 		return query.getSingleResult();
-	}
-
-	public void saveProduct(Product product) {
-		EntityManager em = new JPAUtil().getEntityManager();
-
-		if (product.getId() != null || product.getId() != 0) {
-			em.merge(product);
-		} else {
-			em.persist(product);
-		}
 	}
 }

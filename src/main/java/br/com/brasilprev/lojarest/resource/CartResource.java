@@ -34,7 +34,7 @@ public class CartResource {
 	@Path("/listAll")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Cart> listAll(@PathParam("id") long id) {
-		List<Cart> allCarts = cartDAO.listAllCarts();
+		List<Cart> allCarts = cartDAO.listAll();
 		return allCarts;
 	}
 
@@ -47,25 +47,27 @@ public class CartResource {
 	}
 
 	@POST
-	@Path("{id}/products/{produtoId}")
+	@Path("{id}/products/{productId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addProductToCart(@PathParam("id") long id, @PathParam("productId") long productId) {
 		Cart cart = cartDAO.findCartById(id);
 		Product product = productDAO.findProductById(productId);
 		cart.add(product);
+		cartDAO.saveItem(cart);
 		return Response.ok().build();
 	}
 
-	@Path("{id}/products/{produtoId}")
+	@Path("{id}/products/{productId}")
 	@DELETE
 	public Response removeProduct(@PathParam("id") long id, @PathParam("productId") long productId) {
 		Cart cart = cartDAO.findCartById(id);
 		cart.remove(productId);
+		cartDAO.saveItem(cart);
 		return Response.ok().build();
 	}
 
 	@GET
-	@Path("{id}/products/{produtoId}")
+	@Path("{id}/products/{productId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Product getProductFromCart(@PathParam("id") long id, @PathParam("productId") long productId) {
 		Cart cart = cartDAO.findCartById(id);
