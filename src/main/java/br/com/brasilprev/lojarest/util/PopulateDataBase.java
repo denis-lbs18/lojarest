@@ -9,7 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import javax.persistence.EntityManager;
 
-import br.com.brasilprev.lojarest.dao.JPAUtil;
 import br.com.brasilprev.lojarest.enums.Genre;
 import br.com.brasilprev.lojarest.models.Address;
 import br.com.brasilprev.lojarest.models.Cart;

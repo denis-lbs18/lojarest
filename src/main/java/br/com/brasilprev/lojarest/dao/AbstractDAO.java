@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.brasilprev.lojarest.models.AbstractEntity;
+import br.com.brasilprev.lojarest.util.JPAUtil;
 
 public class AbstractDAO<T extends AbstractEntity> {
 	private Class<T> persistedClass;
@@ -32,12 +33,21 @@ public class AbstractDAO<T extends AbstractEntity> {
 
 		em.getTransaction().begin();
 
-		if (entity.getId() != null || entity.getId() != 0) {
-			em.merge(entity);
-		} else {
+		if (entity.getId() == null || entity.getId() == 0) {
 			em.persist(entity);
+		} else {
+			em.merge(entity);
 		}
 
+		em.getTransaction().commit();
+		em.close();
+	}
+
+	public void removeItem(T entity) {
+		EntityManager em = new JPAUtil().getEntityManager();
+
+		em.getTransaction().begin();
+		em.remove(em.contains(entity) ? entity : em.merge(entity));
 		em.getTransaction().commit();
 		em.close();
 	}

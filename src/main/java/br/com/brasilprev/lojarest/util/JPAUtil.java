@@ -1,4 +1,4 @@
-package br.com.brasilprev.lojarest.dao;
+package br.com.brasilprev.lojarest.util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,5 +14,4 @@ public class JPAUtil {
 	public void close(EntityManager em) {
 		em.close();
 	}
-
 }
